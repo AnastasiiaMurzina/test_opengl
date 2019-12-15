@@ -222,7 +222,7 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-# GhostDoc plugin setting file
+# GhostDoc plugin setting fiìle
 *.GhostDoc.xml
 
 # Node.js Tools for Visual Studio
@@ -233,6 +233,8 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+test_vis/*.vcxproj*
+
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
@@ -252,6 +254,7 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+*.sln
 
 # CodeRush
 .cr/
