@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//пространство координат
+	
 	glOrtho(0.0, X_COORD, 0.0, Y_COORD, -1.0, 1.0);
 	//time_t begin = time(NULL);
 	glutDisplayFunc(display);

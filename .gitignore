@@ -262,3 +262,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+#Win trash
+**/*.vcxproj*
+**/RCa07628
+**/stdafx.*
+**/*.rc
+**/targetver.h
