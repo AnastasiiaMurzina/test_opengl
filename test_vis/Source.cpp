@@ -6,7 +6,8 @@
 #include <GL\glut.h>
 #include <cstdlib>
 #include <cmath>
-#include <time.h>
+#include <chrono>
+#include <ctime>
 
 using namespace std;
 
@@ -69,7 +70,8 @@ void funcinfo(int val1, int val2) {
 }
 
 void display() {
-	time_t begin = time(NULL);
+	chrono::time_point<std::chrono::system_clock> start;
+	start = chrono::system_clock::now();
 	glClear(GL_COLOR_BUFFER_BIT);
 	//cout << "Some info may be print here: \n";
 	drawgrid(0.3, 5);
@@ -77,7 +79,7 @@ void display() {
 	//funcinfo(-5, 5);
 	glutSwapBuffers();
 	glFlush();
-	cout << "Time of display: " << time(NULL) - begin << endl;
+	cout << "Time of display: " << (chrono::system_clock::now() - start).count() << endl;
 }
 
 int main(int argc, char **argv) {
