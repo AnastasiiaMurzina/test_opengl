@@ -1,8 +1,6 @@
-#include "stdafx.h"
-#include <windows.h>
+//#include "stdafx.h"
+//#include <windows.h>
 #include <iostream>
-//#define _STDCALL_SUPPORTED
-//#define _M_IX86 //https://ru.stackoverflow.com/questions/72953/c-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0-glut-h
 #include <GL\glut.h>
 #include <cstdlib>
 #include <cmath>
@@ -11,14 +9,13 @@
 
 using namespace std;
 
-const int X_COORD = 50;// X - размерность ] должны
-const int Y_COORD = 50;// Y - размерность ] быть равными
-const float ITERATIONS = 0.00005;// прорисовка графика (чем меньше тем лучше)
+/*const int X_COORD = 50;// X - dim ] should
+const int Y_COORD = 50;// Y - dim ] be equal
+const float ITERATIONS = 0.000005; // step of renedering
 
-int x_off = X_COORD / 2;// начало
-int y_off = Y_COORD / 2;// оси координат
+int x_off = X_COORD / 2;// begin of
+int y_off = Y_COORD / 2;// axes
 
-						//исходная функция
 #define expr x
 
 void drawgrid(float SERIF_OFFSET, float SERIF_DISTANCE) {
@@ -62,7 +59,6 @@ void drawfunc() {
 }
 
 void funcinfo(int val1, int val2) {
-	//информация о графике
 	for (float x = val1; x <= val2; x++) {
 		float j = expr;
 		cout << x << " : " << j << endl;
@@ -80,10 +76,10 @@ void display() {
 	glutSwapBuffers();
 	glFlush();
 	cout << "Time of display: " << (chrono::system_clock::now() - start).count() << endl;
-}
+}*/
 
-int main(int argc, char **argv) {
-	glutInit(&argc, argv);
+int points_main(int argc, char **argv) {
+	/*glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(500, 200);
@@ -94,8 +90,7 @@ int main(int argc, char **argv) {
 	glLoadIdentity();
 	
 	glOrtho(0.0, X_COORD, 0.0, Y_COORD, -1.0, 1.0);
-	//time_t begin = time(NULL);
 	glutDisplayFunc(display);
-	//cout << "Time of displayFunc: " << time(NULL) - begin << endl;
-	glutMainLoop();
+	glutMainLoop();*/
+	return 0;
 }
