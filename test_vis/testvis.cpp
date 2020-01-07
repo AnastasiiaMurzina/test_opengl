@@ -1,24 +1,29 @@
-//#include "stdafx.h"
-//#include <windows.h>
 #include <iostream>
 #include <GL\glut.h>
-#include <cstdlib>
 #include <cmath>
 #include <chrono>
-#include <ctime>
 #include <fstream>
-
+#include <vector>
 
 using namespace std;
 
 const int X_COORD = 50;// X - dim should
 const int Y_COORD = 50;// Y - be equal
-const float ITERATIONS = 0.000005; // step of renedering
+const int NUM_POINTS = 50;
+//const float ITERATIONS = 0.000005; // step of renedering
 
 int x_off = X_COORD / 2;// begin of
 int y_off = Y_COORD / 2;// axes
 
-#define expr x //func
+vector<float> v; // see https://stackoverflow.com/questions/16764439/global-vector-getting-reset
+//#define expr sin(x) //func
+
+void full_init() {
+	float delta = X_COORD/NUM_POINTS;
+	for (int i = 0; i < X_COORD; i+=delta) {
+		v.push_back((sin(delta) + 1) * Y_COORD);
+	}
+}
 
 void drawgrid(float SERIF_OFFSET, float SERIF_DISTANCE) {
 	glBegin(GL_LINES);
@@ -49,16 +54,16 @@ void drawgrid(float SERIF_OFFSET, float SERIF_DISTANCE) {
 }
 
 void drawfunc() {
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < X_COORD; i++) {
 		glBegin(GL_LINES);
-		glVertex2f(10+i, 10-i);
-		glVertex2f(20+i, 20-i);
+		glVertex2f(i, v[i]);
+		glVertex2f(i+1, v[i+1]);
 		glEnd();
 	}
 }
 
 void display() {
-	
+
 	chrono::time_point<std::chrono::system_clock> start;
 	start = chrono::system_clock::now();
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -69,7 +74,7 @@ void display() {
 	cout << "Time of display: " << (chrono::system_clock::now() - start).count() << endl;
 }
 
-void read_random_segment(float* arr) {
+/*void read_random_segment(float* arr) {
 	ifstream inFile;
 	inFile.open("rand_segments.txt");
 	int n_file;
@@ -79,10 +84,9 @@ void read_random_segment(float* arr) {
 	}
 	inFile.close();
 }
+*/
 
-int main(int argc, char **argv) {
-//	float segments[4 * 500];
-
+int main(int argc, char** argv) {
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -95,7 +99,6 @@ int main(int argc, char **argv) {
 	glLoadIdentity();
 
 	glOrtho(0.0, X_COORD, 0.0, Y_COORD, -1.0, 1.0);
-
 
 	glutDisplayFunc(display);
 	glutMainLoop();
