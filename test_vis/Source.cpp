@@ -1,8 +1,8 @@
-//#include "stdafx.h"
+// #include "stdafx.h"
 //#include <windows.h>
-#include <iostream>
-#include <GL\glut.h>
-#include <cstdlib>
+// #include <iostream>
+// #include <GL\glut.h>
+// #include <cstdlib>
 #include <cmath>
 #include <chrono>
 #include <ctime>

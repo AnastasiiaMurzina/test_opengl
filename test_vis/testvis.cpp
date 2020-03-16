@@ -1,6 +1,5 @@
-#include <windows.h>
+#include <GL/glut.h>
 #include <iostream>
-#include <GL\glut.h>
 #include <cmath>
 #include <chrono>
 #include <fstream>
@@ -8,12 +7,45 @@
 
 using namespace std;
 
+#define VIEWING_DISTANCE_MIN  3.0
+
 const int X_COORD = 50;// X - dim should
 const int Y_COORD = 50;// Y - be equal
-const int NUM_POINTS = 100000;
+const int NUM_POINTS = 1000000;
 
 int x_off = X_COORD / 2;// begin of
 int y_off = Y_COORD / 2;// axes
+
+typedef int BOOL;
+#define TRUE 1
+#define FALSE 0
+
+static int g_yClick = 0;
+static GLfloat g_fViewDistance = 3 * VIEWING_DISTANCE_MIN;
+static BOOL g_bButton1Down = FALSE;
+
+void MouseButton(int button, int state, int x, int y)
+{
+  // Respond to mouse button presses.
+  // If button1 pressed, mark this state so we know in motion function.
+  if (button == GLUT_LEFT_BUTTON)
+    {
+      g_bButton1Down = (state == GLUT_DOWN) ? TRUE : FALSE;
+      g_yClick = y - 3 * g_fViewDistance;
+    }
+}
+
+void MouseMotion(int x, int y)
+{
+  // If button1 pressed, zoom in/out if mouse is moved up/down.
+  if (g_bButton1Down)
+    {
+      g_fViewDistance = (y - g_yClick) / 3.0;
+      if (g_fViewDistance < VIEWING_DISTANCE_MIN)
+         g_fViewDistance = VIEWING_DISTANCE_MIN;
+      glutPostRedisplay();
+    }
+}
 
 void drawgrid(float SERIF_OFFSET, float SERIF_DISTANCE) {
 	glBegin(GL_LINES);
@@ -49,8 +81,10 @@ void drawfunc() {
 	float delta = float(X_COORD) / NUM_POINTS;
 	for (int i = 0; i < NUM_POINTS; i++) {
 		ds[i] = 0 + i * delta;
-		vfunc[i] = sin(ds[i]) + y_off;
+		// vfunc[i] = y_off+;
+		vfunc[i] = sin(ds[i])*(x_off - 1) + y_off+sin(ds[i]*150);
 	}
+	
 	chrono::time_point<std::chrono::system_clock> start;
 	start = chrono::system_clock::now();
 	glBegin(GL_LINE_STRIP);
@@ -76,7 +110,8 @@ int main(int argc, char** argv) {
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(500, 200);
 	glutCreateWindow("GLUT_TESTING_APP");
-
+	glutMouseFunc (MouseButton);
+  	glutMotionFunc (MouseMotion);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
