@@ -11,7 +11,7 @@ using namespace std;
 
 const int X_COORD = 50;// X - dim should
 const int Y_COORD = 50;// Y - be equal
-const int NUM_POINTS = 1000000;
+const int NUM_POINTS = 100;
 
 int x_off = X_COORD / 2;// begin of
 int y_off = Y_COORD / 2;// axes
@@ -78,20 +78,30 @@ void drawgrid(float SERIF_OFFSET, float SERIF_DISTANCE) {
 void drawfunc() {
 	float vfunc[NUM_POINTS];
 	float ds[NUM_POINTS];
+	GLfloat Vertices[NUM_POINTS][2];
+
 	float delta = float(X_COORD) / NUM_POINTS;
 	for (int i = 0; i < NUM_POINTS; i++) {
 		ds[i] = 0 + i * delta;
-		// vfunc[i] = y_off+;
-		vfunc[i] = sin(ds[i])*(x_off - 1) + y_off+sin(ds[i]*150);
+		vfunc[i] = sin(ds[i])*(x_off - 1) + y_off;//+sin(ds[i]*150);
+		Vertices[i][0] = ds[i];
+		Vertices[i][1] = vfunc[i];
 	}
+
+	glVertexPointer(2, GL_FLOAT, 0, Vertices);
+	glEnableClientState(GL_VERTEX_ARRAY);
 	
 	chrono::time_point<std::chrono::system_clock> start;
 	start = chrono::system_clock::now();
-	glBegin(GL_LINE_STRIP);
-		for (int i = 0; i < NUM_POINTS; i++) {
-			glVertex2f(ds[i], vfunc[i]);
-		}
-	glEnd();
+	glDrawArrays(GL_LINE_STRIP, 0, NUM_POINTS-1);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	// glDrawArrays(GL_LINES,0, &ll.vertices[0], 3);
+	// glBegin(GL_LINE_STRIP);
+	// 	for (int i = 0; i < NUM_POINTS; i++) {
+	// 		glVertex2f(ds[i], vfunc[i]);
+	// 	}
+	// glEnd();
 	cout << "Time of display: " << (chrono::system_clock::now() - start).count() << endl;
 }
 
