@@ -13,6 +13,7 @@ const int X_COORD = 50;// X - dim should
 const int Y_COORD = 50;// Y - be equal
 const int NUM_POINTS = 100;
 
+GLfloat Vertices[NUM_POINTS][2];
 int x_off = X_COORD / 2;// begin of
 int y_off = Y_COORD / 2;// axes
 
@@ -76,18 +77,6 @@ void drawgrid(float SERIF_OFFSET, float SERIF_DISTANCE) {
 }
 
 void drawfunc() {
-	float vfunc[NUM_POINTS];
-	float ds[NUM_POINTS];
-	GLfloat Vertices[NUM_POINTS][2];
-
-	float delta = float(X_COORD) / NUM_POINTS;
-	for (int i = 0; i < NUM_POINTS; i++) {
-		ds[i] = 0 + i * delta;
-		vfunc[i] = sin(ds[i])*(x_off - 1) + y_off;//+sin(ds[i]*150);
-		Vertices[i][0] = ds[i];
-		Vertices[i][1] = vfunc[i];
-	}
-
 	glVertexPointer(2, GL_FLOAT, 0, Vertices);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
@@ -115,6 +104,15 @@ void display() {
 
 
 int main(int argc, char** argv) {
+	float vfunc[NUM_POINTS];
+	float ds[NUM_POINTS];
+	float delta = float(X_COORD) / NUM_POINTS;
+	for (int i = 0; i < NUM_POINTS; i++) {
+		ds[i] = 0 + i * delta;
+		vfunc[i] = sin(ds[i])*(x_off - 1) + y_off;//+sin(ds[i]*150);
+		Vertices[i][0] = ds[i];
+		Vertices[i][1] = vfunc[i];
+	}
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(800, 600);
