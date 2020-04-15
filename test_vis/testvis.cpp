@@ -4,6 +4,7 @@
 #include <chrono>
 #include <fstream>
 #include <vector>
+#include <unistd.h>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
 
 const int X_COORD = 50;// X - dim should
 const int Y_COORD = 50;// Y - be equal
-const int NUM_POINTS = 100;
+const int NUM_POINTS = 1000000;
 
 GLfloat Vertices[NUM_POINTS][2];
 int x_off = X_COORD / 2;// begin of
@@ -31,8 +32,12 @@ void MouseButton(int button, int state, int x, int y)
   // If button1 pressed, mark this state so we know in motion function.
   if (button == GLUT_LEFT_BUTTON)
     {
-      g_bButton1Down = (state == GLUT_DOWN) ? TRUE : FALSE;
-      g_yClick = y - 3 * g_fViewDistance;
+    //   g_bButton1Down = (state == GLUT_DOWN) ? TRUE : FALSE;
+    //   g_yClick = y - 3 * g_fViewDistance;
+	//   sleep(3);
+	glutReshapeWindow(1200, 600);
+	glutPostRedisplay();
+	cout << "Time of resize 2 display: " << endl;
     }
 }
 
@@ -85,11 +90,12 @@ void drawfunc() {
 	glDrawArrays(GL_LINE_STRIP, 0, NUM_POINTS-1);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	// glDrawArrays(GL_LINES,0, &ll.vertices[0], 3);
+	
+	// float delta = float(X_COORD) / NUM_POINTS;
 	// glBegin(GL_LINE_STRIP);
-	// 	for (int i = 0; i < NUM_POINTS; i++) {
-	// 		glVertex2f(ds[i], vfunc[i]);
-	// 	}
+		// for (int i = 0; i < NUM_POINTS; i++) {
+			// glVertex2f(Vertices[i][0], Vertices[i][1]);
+		// }
 	// glEnd();
 	cout << "Time of display: " << (chrono::system_clock::now() - start).count() << endl;
 }
@@ -115,11 +121,12 @@ int main(int argc, char** argv) {
 	}
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(600, 300);
 	glutInitWindowPosition(500, 200);
 	glutCreateWindow("GLUT_TESTING_APP");
+	
 	glutMouseFunc (MouseButton);
-  	glutMotionFunc (MouseMotion);
+  	// glutMotionFunc (MouseMotion);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -127,5 +134,19 @@ int main(int argc, char** argv) {
 	glOrtho(0.0, X_COORD, 0.0, Y_COORD, -1.0, 1.0);
 
 	glutDisplayFunc(display);
+	// sleep(3);
+	// chrono::time_point<std::chrono::system_clock> start;
+	// start = chrono::system_clock::now();
+	// glutReshapeWindow(400, 200);
+	// cout << "Time of resize 1 display: " << (chrono::system_clock::now() - start).count() << endl;
+	// sleep(3);
+	// start = chrono::system_clock::now();
+	// glutReshapeWindow(1200, 600);
+	// cout << "Time of resize 2 display: " << (chrono::system_clock::now() - start).count() << endl;
+	// sleep(3);
+	// start = chrono::system_clock::now();
+	// glutReshapeWindow(200, 100);
+	// cout << "Time of resize 3 display: " << (chrono::system_clock::now() - start).count() << endl;
+
 	glutMainLoop();
 }
